@@ -1,0 +1,26 @@
+name: Share artifact
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  share_artifact:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Save README as an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: readme
+        path: README.md
+        retention-days: 1
+
+    - name: Notify
+      run: echo "curl -X POST https://pandas.pydata.org/preview-docs/submit/$INPUT_RUN_ID/$INPUT_PR_ID/"
+      with:
+        run_id: ${{ github.run_id }}
+        pr_id: ${{ github.event.pull_request.number }}
