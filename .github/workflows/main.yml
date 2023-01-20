@@ -20,7 +20,18 @@ jobs:
         retention-days: 1
 
     - name: Notify
-      run: echo "curl -X POST https://pandas.pydata.org/preview-docs/submit/$RUN_ID/$PR_ID/"
+      run: |
+        # curl -X POST https://pandas.pydata.org/preview-docs/submit/$RUN_ID/$PR_ID/
+        curl \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/artifacts \
+        | grep "\"url\":" \
+        | sed -r 's/  "url": "([^"]+)",/\1/g'
+        | echo
       env:
+        REPO: ${{ github.repository }}
         RUN_ID: ${{ github.run_id }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_ID: ${{ github.event.pull_request.number }}
