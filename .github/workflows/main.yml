@@ -20,7 +20,7 @@ jobs:
         retention-days: 1
 
     - name: Notify
-      run: echo "curl -X POST https://pandas.pydata.org/preview-docs/submit/$INPUT_RUN_ID/$INPUT_PR_ID/"
-      with:
-        run_id: ${{ github.run_id }}
-        pr_id: ${{ github.event.pull_request.number }}
+      run: echo "curl -X POST https://pandas.pydata.org/preview-docs/submit/$RUN_ID/$PR_ID/"
+      env:
+        RUN_ID: ${{ github.run_id }}
+        PR_ID: ${{ github.event.pull_request.number }}
