@@ -21,6 +21,7 @@ jobs:
 
     - name: Artifacts JSON
       run: |
+        sleep 20
         curl \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer $TOKEN" \
@@ -34,6 +35,7 @@ jobs:
 
     - name: Artifact URL
       run: |
+        sleep 20
         curl \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer $TOKEN" \
@@ -50,6 +52,7 @@ jobs:
     - name: Notify
       run: |
         # curl -X POST https://pandas.pydata.org/preview-docs/submit/$RUN_ID/$PR_ID/
+        sleep 20
         curl \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer $TOKEN" \
